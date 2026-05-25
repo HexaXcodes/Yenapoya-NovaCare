@@ -17,6 +17,7 @@ import logging
 from typing import Optional
 
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
+from sqlalchemy import event, text
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
@@ -50,9 +51,20 @@ async def connect_mongo() -> None:
     if mongo_state.client is not None:
         return
     logger.info("Connecting to MongoDB at %s", settings.MONGO_URI)
-    mongo_state.client = AsyncIOMotorClient(settings.MONGO_URI, uuidRepresentation="standard")
+    # Use a shorter server selection timeout for index creation at startup
+    mongo_state.client = AsyncIOMotorClient(
+        settings.MONGO_URI,
+        uuidRepresentation="standard",
+        serverSelectionTimeoutMS=2000
+    )
     mongo_state.db = mongo_state.client[settings.MONGO_DB]
-    await _ensure_indexes(mongo_state.db)
+    try:
+        await _ensure_indexes(mongo_state.db)
+    except Exception:
+        logger.warning(
+            "Could not connect to MongoDB to ensure indexes during startup. "
+            "Proceeding in offline-first mode."
+        )
 
 
 async def close_mongo() -> None:
@@ -100,6 +112,14 @@ async def connect_sqlite() -> None:
         return
     logger.info("Initialising SQLite engine at %s", settings.SQLITE_URL)
     sql_state.engine = create_async_engine(settings.SQLITE_URL, echo=False, future=True)
+
+    @event.listens_for(sql_state.engine.sync_engine, "connect")
+    def set_sqlite_pragma(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA synchronous=NORMAL")
+        cursor.close()
+
     sql_state.sessionmaker = async_sessionmaker(
         sql_state.engine, expire_on_commit=False, class_=AsyncSession
     )
@@ -130,3 +150,40 @@ async def get_sql_session() -> AsyncSession:
     maker = get_sql_sessionmaker()
     async with maker() as session:
         yield session
+
+
+async def check_mongo_health() -> bool:
+    if mongo_state.client is None or mongo_state.db is None:
+        return False
+    try:
+        await mongo_state.db.command("ping")
+        return True
+    except Exception:
+        logger.exception("MongoDB healthcheck failed")
+        return False
+
+
+async def check_sqlite_health() -> bool:
+    if sql_state.engine is None:
+        return False
+    try:
+        async with sql_state.engine.connect() as conn:
+            await conn.execute(text("SELECT 1"))
+        return True
+    except Exception:
+        logger.exception("SQLite healthcheck failed")
+        return False
+
+
+async def get_pending_sync_count() -> int:
+    if sql_state.sessionmaker is None:
+        return 0
+    try:
+        async with sql_state.sessionmaker() as session:
+            result = await session.execute(
+                text("SELECT COUNT(*) FROM sync_queue WHERE sync_state IN ('pending', 'failed')")
+            )
+            return result.scalar() or 0
+    except Exception:
+        logger.exception("Failed to get pending sync count")
+        return 0

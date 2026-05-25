@@ -38,10 +38,21 @@ class Settings(BaseSettings):
 
     # ---- MongoDB ----
     MONGO_URI: str = Field(default="mongodb://localhost:27017")
+    MONGODB_URI: str | None = Field(default=None)
     MONGO_DB: str = Field(default="novacare")
 
     # ---- SQLite (on-device mirror / fallback) ----
     SQLITE_URL: str = Field(default="sqlite+aiosqlite:///./novacare_local.db")
+    SQLITE_PATH: str | None = Field(default=None)
+
+    # ---- Sync Interval ----
+    SYNC_INTERVAL_SECONDS: int = Field(default=30)
+
+    def model_post_init(self, __context) -> None:
+        if self.MONGODB_URI:
+            self.MONGO_URI = self.MONGODB_URI
+        if self.SQLITE_PATH:
+            self.SQLITE_URL = f"sqlite+aiosqlite:///{self.SQLITE_PATH}"
 
     # ---- CORS ----
     # Comma-separated list of allowed origins in env, e.g.

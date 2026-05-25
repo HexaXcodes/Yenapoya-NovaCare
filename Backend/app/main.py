@@ -45,6 +45,10 @@ logging.basicConfig(
     level=logging.DEBUG if settings.DEBUG else logging.INFO,
     format="%(asctime)s %(levelname)s %(name)s :: %(message)s",
 )
+# Silence noisy third-party logs to keep the console clean
+for logger_name in ["pymongo", "aiosqlite", "apscheduler", "watchfiles", "motor", "urllib3"]:
+    logging.getLogger(logger_name).setLevel(logging.WARNING)
+
 logger = logging.getLogger("novacare")
 
 
@@ -54,9 +58,13 @@ async def lifespan(app: FastAPI):
     await connect_mongo()
     await connect_sqlite()
     start_scheduler()
+    from app.services.sync_worker import start_sync_worker
+    await start_sync_worker()
     try:
         yield
     finally:
+        from app.services.sync_worker import stop_sync_worker
+        await stop_sync_worker()
         stop_scheduler()
         await close_sqlite()
         await close_mongo()
@@ -109,7 +117,26 @@ async def unhandled_error_handler(_: Request, exc: Exception):
 # ---- Health ----
 @app.get("/health", tags=["health"])
 async def health():
-    return {"success": True, "data": {"status": "ok", "env": settings.APP_ENV}, "error": None}
+    from app.database import check_mongo_health, check_sqlite_health, get_pending_sync_count
+
+    mongo_ok = await check_mongo_health()
+    sqlite_ok = await check_sqlite_health()
+    pending_count = await get_pending_sync_count()
+
+    overall_ok = mongo_ok and sqlite_ok
+    status = "ok" if overall_ok else "degraded"
+
+    return {
+        "success": True,
+        "data": {
+            "status": status,
+            "env": settings.APP_ENV,
+            "sqlite_status": "connected" if sqlite_ok else "disconnected",
+            "mongodb_status": "connected" if mongo_ok else "disconnected",
+            "pending_sync_count": pending_count
+        },
+        "error": None
+    }
 
 
 # ---- Routers ----
