@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Test / tooling
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Runtime artifacts
+.env
+*.db
+novacare_local.db
+data/tts_cache/
+
+# OS
+.DS_Store

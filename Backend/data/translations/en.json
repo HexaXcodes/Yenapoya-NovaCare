@@ -1,0 +1,19 @@
+{
+  "action_green": "Schedule routine follow-up in 6 months.",
+  "action_amber": "Flag for glucometer and BP cuff check on this visit.",
+  "action_red": "Immediate referral. Auto-alert the PHC doctor now.",
+
+  "explain_green": "Your screening score is {score}. Your current risk is low. Keep up healthy habits and a routine check in six months.",
+  "explain_amber": "Your screening score is {score}. There are some early warning signs. A simple blood sugar and blood pressure check is recommended this visit.",
+  "explain_red": "Your screening score is {score}. The signs point to high risk. Please see the PHC doctor soon for a full check-up.",
+
+  "report_headline_green": "Good news — your risk is low.",
+  "report_headline_amber": "Some early signs to watch.",
+  "report_headline_red": "Please get checked soon.",
+
+  "next_visit_green": "Your next ASHA visit is in about 6 months.",
+  "next_visit_amber": "Your ASHA will visit again soon for a quick check.",
+  "next_visit_red": "You will be referred to the PHC doctor right away.",
+
+  "sms_missed_followup": "NovaCare: It has been over 3 weeks since your last health check. Please meet your ASHA worker for a quick follow-up."
+}

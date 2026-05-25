@@ -1,0 +1,108 @@
+{
+  "karnataka_coastal": {
+    "prediabetic": {
+      "low_income": [
+        {
+          "hi": "इस हफ़्ते सफ़ेद चावल की जगह 3 बार लाल चावल (कुथल चावल) खाएँ।",
+          "kn": "ಈ ವಾರ ಬಿಳಿ ಅನ್ನದ ಬದಲು 3 ಬಾರಿ ಕೆಂಪು ಅಕ್ಕಿ (ಕುತ್ತಲಕ್ಕಿ) ಬಳಸಿ.",
+          "en": "Swap white rice for red (parboiled) rice three times this week.",
+          "tips": [
+            "Cook the same way; red rice needs a little more water.",
+            "Local red rice is cheaper at the weekly santhe."
+          ]
+        },
+        {
+          "hi": "सांभर में सहजन (ड्रमस्टिक) के पत्ते डालें।",
+          "kn": "ಸಾಂಬಾರ್‌ಗೆ ನುಗ್ಗೆ ಸೊಪ್ಪು ಸೇರಿಸಿ.",
+          "en": "Add drumstick (moringa) leaves to your sambar.",
+          "tips": [
+            "Drumstick grows in most backyards \u2014 no cost.",
+            "Adds iron and fibre that slow sugar spikes."
+          ]
+        },
+        {
+          "hi": "दिन के पहले भोजन से पहले 20 मिनट टहलें।",
+          "kn": "ದಿನದ ಮೊದಲ \u0c8a\u0c9f\u0c95\u0c95\u0c95\u0c95\u0c95 ಮೊದಲು 20 ನಿಮಿಷ ನಡೆಯಿರಿ.",
+          "en": "Walk for 20 minutes before your first meal of the day.",
+          "tips": [
+            "A walk to the well or field counts.",
+            "Morning light also helps your sleep."
+          ]
+        },
+        {
+          "hi": "रोज़ एक मुट्ठी भुना चना (फुटाना) खाएँ, तले हुए नाश्ते की जगह।",
+          "kn": "ಪ್ರತಿದಿನ ಒಂದು ಮುಷ್ಟಿ ಹುರಿದ ಕಡಲೆ ತಿನ್ನಿ, ಕರಿದ ತಿಂಡಿಯ ಬದಲು.",
+          "en": "Eat a handful of roasted chana instead of fried snacks daily.",
+          "tips": [
+            "Cheap, filling, and high in protein.",
+            "Carry some in a cloth pouch for hunger pangs."
+          ]
+        }
+      ],
+      "mid_income": [
+        {
+          "hi": "हफ़्ते में 4 बार बाजरा/रागी की रोटी या मुद्दे लें।",
+          "kn": "ವಾರಕ್ಕೆ 4 ಬಾರಿ ರಾಗಿ ಮುದ್ದೆ ಅಥವಾ ರೊಟ್ಟಿ ಸೇವಿಸಿ.",
+          "en": "Have ragi/millet mudde or roti four times a week.",
+          "tips": [
+            "Pair with a vegetable curry, not coconut-heavy gravy.",
+            "Millets keep you full longer."
+          ]
+        },
+        {
+          "hi": "खाने की थाली का आधा हिस्सा सब्ज़ियों से भरें।",
+          "kn": "ಊಟದ ತಟ್ಟೆಯ ಅರ್ಧ ಭಾಗ ತರಕಾರಿಯಿಂದ ತುಂಬಿಸಿ.",
+          "en": "Fill half your plate with vegetables at every meal.",
+          "tips": [
+            "Seasonal local greens are best.",
+            "Less rice, more sabzi."
+          ]
+        }
+      ]
+    },
+    "amber": {
+      "low_income": [
+        {
+          "hi": "चाय में चीनी आधी कर दें; धीरे-धीरे बंद करने की कोशिश करें।",
+          "kn": "ಚಹಾದಲ್ಲಿ ಸಕ್ಕರೆ ಅರ್ಧ ಮಾಡಿ; \u0c95ರಮೇಣ ನಿಲ್ಲಿಸಲು ಪ್ರಯತ್ನಿಸಿ.",
+          "en": "Halve the sugar in your tea; aim to stop gradually.",
+          "tips": ["Your taste adjusts in about two weeks."]
+        }
+      ],
+      "mid_income": [
+        {
+          "hi": "रोज़ 30 मिनट तेज़ चलें और हर भोजन के बाद 5 मिनट टहलें।",
+          "kn": "\u0c95\u0c95\u0c95 ದಿನ 30 ನಿಮಿಷ ವೇಗದ ನಡಿಗೆ ಮತ್ತು ಪ್ರತಿ ಊಟದ ನಂತರ 5 ನಿಮಿಷ ನಡಿಗೆ.",
+          "en": "Walk briskly 30 minutes daily and 5 minutes after each meal.",
+          "tips": ["Post-meal walks blunt the sugar spike."]
+        }
+      ]
+    }
+  },
+  "default": {
+    "prediabetic": {
+      "low_income": [
+        {
+          "hi": "सफ़ेद चावल कम करें, मोटे अनाज बढ़ाएँ।",
+          "kn": "ಬಿಳಿ ಅನ್ನ ಕಡಿಮೆ ಮಾಡಿ, ಧಾನ್ಯ ಹೆಚ್ಚಿಸಿ.",
+          "en": "Reduce white rice and increase whole grains.",
+          "tips": ["Small steady changes work best."]
+        },
+        {
+          "hi": "रोज़ 20-30 मिनट चलें।",
+          "kn": "ಪ್ರತಿದಿನ 20-30 ನಿಮಿಷ ನಡೆಯಿರಿ.",
+          "en": "Walk 20-30 minutes every day.",
+          "tips": ["Any movement counts."]
+        }
+      ],
+      "mid_income": [
+        {
+          "hi": "थाली का आधा भाग सब्ज़ियों से भरें।",
+          "kn": "ತಟ್ಟೆಯ ಅರ್ಧ ಭಾಗ ತರಕಾರಿ.",
+          "en": "Fill half your plate with vegetables.",
+          "tips": ["Local seasonal vegetables are ideal."]
+        }
+      ]
+    }
+  }
+}
